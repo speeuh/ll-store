@@ -7,6 +7,8 @@ import com.ll.store.repository.product.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class ProductService {
 
@@ -15,7 +17,10 @@ public class ProductService {
 
     public ProductResponseDto createProduct(ProductRequestDto productRequestDto){
 
+        Date date = new Date();
+
         Product product = productRequestDto.convertDtoToEntity();
+        product.setProductDate(date);
         Product productResponse = productRepository.save(product);
 
         return productResponse.convertEntityToResponse();

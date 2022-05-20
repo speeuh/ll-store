@@ -1,10 +1,15 @@
 package com.ll.store.repository.entity.product;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ll.store.service.dto.product.ProductResponseDto;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "products")
 public class Product {
@@ -15,6 +20,8 @@ public class Product {
     private String productName;
     private String brandName;
     private Double productValue;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private Date productDate;
     private Date productExpiry;
 
     public Product(String productName, String brandName, Double productValue, Date productExpiry) {
@@ -25,6 +32,6 @@ public class Product {
     }
 
     public ProductResponseDto convertEntityToResponse(){
-        return new ProductResponseDto(productName, brandName, productValue, productExpiry);
+        return new ProductResponseDto(id, productName, brandName, productValue, productDate, productExpiry);
     }
 }
