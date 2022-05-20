@@ -1,7 +1,12 @@
 package com.ll.store.repository.entity.section;
 
-import javax.persistence.*;
+import com.ll.store.service.dto.section.SectionResponseDto;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.*;
+@Setter
+@Getter
 @Entity
 @Table(name = "sections")
 public class Section {
@@ -11,4 +16,13 @@ public class Section {
     private long id;
     private String section;
 
-}
+    public Section(String section) {
+
+        this.section = section;
+    }
+
+    public SectionResponseDto convertEntityToResponseDto(){
+
+        return new SectionResponseDto(id, section);
+    }
+};
