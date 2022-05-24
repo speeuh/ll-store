@@ -16,6 +16,9 @@ public class Section {
     private long id;
     private String section;
 
+    public Section() {
+    }
+
     public Section(String section) {
 
         this.section = section;
