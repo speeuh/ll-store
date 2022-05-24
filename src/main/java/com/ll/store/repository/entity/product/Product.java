@@ -31,6 +31,9 @@ public class Product {
         this.productExpiry = productExpiry;
     }
 
+    public Product() {
+    }
+
     public ProductResponseDto convertEntityToResponse(){
         return new ProductResponseDto(id, productName, brandName, productValue, productDate, productExpiry);
     }
