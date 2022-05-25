@@ -5,7 +5,9 @@ import com.ll.store.repository.entity.section.Section;
 import com.ll.store.repository.section.SectionRepository;
 import com.ll.store.service.dto.section.SectionRequestDto;
 import com.ll.store.service.dto.section.SectionResponseDto;
+import com.ll.store.service.dto.section.SectionUpdateDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -31,4 +33,26 @@ public class SectionService {
         Section section = sectionRepository.findById(id).orElseThrow(() -> new SectionNotFoundException("Not found section with id " + id));
         return section.convertEntityToResponseDto();
     }
+
+    public void deleteSectionById(long id) {
+
+        try{
+            sectionRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new SectionNotFoundException("Not found section with id " + id);
+        }
+    }
+
+    public SectionResponseDto updateSectionById(SectionUpdateDto sectionUpdateDto, long id) {
+        Section section = sectionRepository.findById(id).orElseThrow(()-> new SectionNotFoundException("Not found section with id " + id));
+
+        if(sectionUpdateDto.getSection() != null) {
+            section.setSection(sectionUpdateDto.getSection());
+        }
+
+        Section sectionResponse = sectionRepository.save(section);
+         return sectionResponse.convertEntityToResponseDto();
+    }
+
+
 }
