@@ -1,6 +1,7 @@
 package com.ll.store.model.product;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ll.store.repository.entity.brand.Brand;
 import com.ll.store.service.dto.product.ProductRequestDto;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,8 +16,8 @@ public class ProductRequestModel {
 
     @NotNull @NotBlank
     private String productName;
-    @NotNull @NotBlank
-    private String brandName;
+    @NotNull
+    private Brand brand;
     @NotNull
     private Double productValue;
     @NotNull
@@ -24,6 +25,6 @@ public class ProductRequestModel {
     private Date productExpiry;
 
     public ProductRequestDto convertRequestModelToDto(){
-        return new ProductRequestDto(productName, brandName, productValue, productExpiry);
+        return new ProductRequestDto(productName, brand, productValue, productExpiry);
     }
 }
