@@ -21,7 +21,6 @@ public class Market {
     private String marketName;
     private String marketAddress;
     private String marketNumber;
-    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date workingTime;
     private long marketCnpj;
 

@@ -1,4 +1,4 @@
-package com.ll.store.service.section;
+package com.ll.store.service.product.section;
 
 import com.ll.store.config.validation.exceptions.SectionNotFoundException;
 import com.ll.store.repository.entity.section.Section;

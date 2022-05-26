@@ -6,7 +6,7 @@ import com.ll.store.model.section.SectionUpdateModel;
 import com.ll.store.service.dto.section.SectionRequestDto;
 import com.ll.store.service.dto.section.SectionResponseDto;
 import com.ll.store.service.dto.section.SectionUpdateDto;
-import com.ll.store.service.section.SectionService;
+import com.ll.store.service.product.section.SectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

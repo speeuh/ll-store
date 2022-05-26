@@ -1,5 +1,6 @@
 package com.ll.store.model.market;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ll.store.service.dto.market.MarketRequestDto;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +19,7 @@ public class MarketRequestModel {
     private String marketAddress;
     @NotNull @NotBlank
     private String marketNumber;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date workingTime;
     @NotNull
     private long marketCnpj;
