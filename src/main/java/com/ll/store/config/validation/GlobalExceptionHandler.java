@@ -1,5 +1,6 @@
 package com.ll.store.config.validation;
 
+import com.ll.store.config.validation.exceptions.BrandNotFoundException;
 import com.ll.store.config.validation.exceptions.ProductNotFoundException;
 import com.ll.store.config.validation.exceptions.SectionNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,18 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({SectionNotFoundException.class})
     public ResponseEntity<ErrorMessage>handleSectionNotFoundException(SectionNotFoundException ex, WebRequest request) {
+
+        ErrorMessage message = new ErrorMessage(
+                HttpStatus.NOT_FOUND.value(),
+                new Date(),
+                ex.getMessage(),
+                request.getDescription(false));
+
+        return new ResponseEntity<ErrorMessage>(message, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler({BrandNotFoundException.class})
+    public ResponseEntity<ErrorMessage>handleBrandConflictException(BrandNotFoundException ex, WebRequest request){
 
         ErrorMessage message = new ErrorMessage(
                 HttpStatus.NOT_FOUND.value(),
