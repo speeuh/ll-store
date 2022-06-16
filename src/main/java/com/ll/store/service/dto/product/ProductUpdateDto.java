@@ -1,5 +1,6 @@
 package com.ll.store.service.dto.product;
 
+import com.ll.store.repository.entity.brand.Brand;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,12 +9,10 @@ import lombok.Setter;
 public class ProductUpdateDto {
 
     private String productName;
-    private String brandName;
     private Double productValue;
 
-    public ProductUpdateDto(String productName, String brandName, Double productValue) {
+    public ProductUpdateDto(String productName, Double productValue) {
         this.productName = productName;
-        this.brandName = brandName;
         this.productValue = productValue;
     }
 

@@ -1,6 +1,12 @@
 package com.ll.store.service.product;
 
+import com.ll.store.config.validation.exceptions.BrandNotFoundException;
 import com.ll.store.config.validation.exceptions.ProductNotFoundException;
+import com.ll.store.config.validation.exceptions.SectionNotFoundException;
+import com.ll.store.repository.brand.BrandRepository;
+import com.ll.store.repository.entity.brand.Brand;
+import com.ll.store.repository.entity.section.Section;
+import com.ll.store.repository.section.SectionRepository;
 import com.ll.store.service.dto.product.ProductRequestDto;
 import com.ll.store.service.dto.product.ProductResponseDto;
 import com.ll.store.repository.entity.product.Product;
@@ -20,7 +26,19 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private BrandRepository brandRepository;
+
+    @Autowired
+    private SectionRepository sectionRepository;
+
     public ProductResponseDto createProduct(ProductRequestDto productRequestDto){
+
+        Brand brand = brandRepository.findById(productRequestDto.getBrand().getId()).orElseThrow(() -> new BrandNotFoundException("Not found brand with id: " + productRequestDto.getBrand().getId()));
+        productRequestDto.getBrand().setBrandName(brand.getBrandName());
+
+        Section section = sectionRepository.findById(productRequestDto.getSection().getId()).orElseThrow(() -> new SectionNotFoundException("Not found section with id: " + productRequestDto.getSection().getId()));
+        productRequestDto.getSection().setSection(section.getSection());
 
         Date date = new Date();
 
@@ -55,10 +73,6 @@ public class ProductService {
 
         if(productUpdateDto.getProductName() != null){
             product.setProductName(productUpdateDto.getProductName());
-        }
-
-        if(productUpdateDto.getBrandName() != null){
-            product.setBrandName(productUpdateDto.getBrandName());
         }
 
         if(productUpdateDto.getProductValue() != null){
