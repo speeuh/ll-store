@@ -4,8 +4,6 @@ import com.ll.store.repository.entity.market.Market;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
-
 @Getter
 @Setter
 public class MarketRequestDto {
@@ -13,10 +11,10 @@ public class MarketRequestDto {
     private String marketName;
     private String marketAddress;
     private String marketNumber;
-    private Date workingTime;
-    private long marketCnpj;
+    private String workingTime;
+    private String marketCnpj;
 
-    public MarketRequestDto(String marketName, String marketAddress, String marketNumber, Date workingTime, long marketCnpj) {
+    public MarketRequestDto(String marketName, String marketAddress, String marketNumber,  String workingTime, String marketCnpj) {
         this.marketName = marketName;
         this.marketAddress = marketAddress;
         this.marketNumber = marketNumber;
