@@ -1,6 +1,7 @@
 package com.ll.store.config.validation;
 
 import com.ll.store.config.validation.exceptions.BrandNotFoundException;
+import com.ll.store.config.validation.exceptions.MarketNotFoundException;
 import com.ll.store.config.validation.exceptions.ProductNotFoundException;
 import com.ll.store.config.validation.exceptions.SectionNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -49,4 +50,15 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<ErrorMessage>(message, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler({MarketNotFoundException.class})
+    public ResponseEntity<ErrorMessage>handleMarketNotFoundException(MarketNotFoundException ex, WebRequest request) {
+        ErrorMessage message = new ErrorMessage(
+                HttpStatus.NOT_FOUND.value(),
+                new Date(),
+                ex.getMessage(),
+                request.getDescription(false));
+        return new ResponseEntity<ErrorMessage>(message, HttpStatus.NOT_FOUND);
+    }
+
 }
