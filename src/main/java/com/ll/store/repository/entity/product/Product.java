@@ -29,15 +29,17 @@ public class Product {
     @ManyToOne(fetch= FetchType.EAGER)
     @JoinColumn(name = "section_id", referencedColumnName="id")
     private Section section;
+    private String description;
     private Double productValue;
     @JsonFormat(pattern = "dd/MM/yyyy")
     private Date productDate;
     private Date productExpiry;
 
-    public Product(String productName, Brand brand, Section section, Double productValue, Date productExpiry) {
+    public Product(String productName, Brand brand, Section section, String description, Double productValue, Date productExpiry) {
         this.productName = productName;
         this.brand = brand;
         this.section = section;
+        this.description = description;
         this.productValue = productValue;
         this.productExpiry = productExpiry;
     }
@@ -46,6 +48,6 @@ public class Product {
     }
 
     public ProductResponseDto convertEntityToResponse(){
-        return new ProductResponseDto(id, productName, brand, section, productValue, productDate, productExpiry);
+        return new ProductResponseDto(id, productName, brand, section, description, productValue, productDate, productExpiry);
     }
 }

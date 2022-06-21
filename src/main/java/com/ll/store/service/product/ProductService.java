@@ -75,6 +75,10 @@ public class ProductService {
             product.setProductName(productUpdateDto.getProductName());
         }
 
+        if(productUpdateDto.getDescription() != null){
+            product.setDescription(productUpdateDto.getDescription());
+        }
+
         if(productUpdateDto.getProductValue() != null){
             product.setProductValue(productUpdateDto.getProductValue());
         }

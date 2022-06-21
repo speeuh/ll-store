@@ -9,9 +9,10 @@ import lombok.Setter;
 public class ProductUpdateDto {
 
     private String productName;
+    private String description;
     private Double productValue;
 
-    public ProductUpdateDto(String productName, Double productValue) {
+    public ProductUpdateDto(String productName, String description, Double productValue) {
         this.productName = productName;
         this.productValue = productValue;
     }

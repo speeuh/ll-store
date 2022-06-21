@@ -21,6 +21,8 @@ public class ProductRequestModel {
     private Brand brand;
     @NotNull
     private Section section;
+    @NotNull @NotBlank
+    private String description;
     @NotNull
     private Double productValue;
     @NotNull
@@ -28,6 +30,6 @@ public class ProductRequestModel {
     private Date productExpiry;
 
     public ProductRequestDto convertRequestModelToDto(){
-        return new ProductRequestDto(productName, brand, section, productValue, productExpiry);
+        return new ProductRequestDto(productName, brand, section, description, productValue, productExpiry);
     }
 }
