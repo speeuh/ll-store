@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,9 +19,16 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    private final PasswordEncoder encoder;
+
+    public UserService(PasswordEncoder encoder) {
+        this.encoder = encoder;
+    }
+
     public UserResponseDto createUser(UserRequestDto userRequestDto){
 
         User user = userRequestDto.convertRequestDtoToEntity();
+        user.setPassword(encoder.encode(user.getPassword()));
         User userResponse = userRepository.save(user);
 
         return userResponse.convertEntityToResponseDto();
@@ -52,6 +60,7 @@ public class UserService {
             user.setPassword(userUpdateDto.getPassword());
         }
 
+        user.setPassword(encoder.encode(user.getPassword()));
         User userResponse = userRepository.save(user);
         return userResponse.convertEntityToResponseDto();
     }
