@@ -19,6 +19,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -51,6 +53,12 @@ public class ProductService {
 
     public Page<ProductResponseDto> getAllProducts(Pageable pageable){
         return productRepository.findAll(pageable).map(Product::convertEntityToResponse);
+    }
+
+    public List<ProductResponseDto> getAllListedProducts() {
+        return productRepository.findAll().stream()
+                .map(Product::convertEntityToResponse)
+                .collect(Collectors.toList());
     }
 
     public ProductResponseDto getById(long id){

@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -51,6 +53,14 @@ public class ProductController {
 
         ProductResponseDto productResponseDto = productService.getById(id);
         return ResponseEntity.ok(productResponseDto.convertResponseDtoToResponseModel());
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<List<ProductResponseModel>> getAllListedProducts() {
+        List<ProductResponseDto> productResponseDto = productService.getAllListedProducts();
+        return ResponseEntity.ok(productResponseDto.stream()
+                .map(ProductResponseDto::convertResponseDtoToResponseModel)
+                .collect(Collectors.toList()));
     }
 
     @DeleteMapping("/{id}")
