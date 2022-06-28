@@ -12,17 +12,17 @@ import javax.validation.constraints.NotNull;
 public class MarketRequestModel {
 
     @NotBlank @NotNull
-    private String marketName;
+    private String name;
     @NotNull @NotBlank
-    private String marketAddress;
+    private String address;
     @NotNull @NotBlank
-    private String marketNumber;
+    private String number;
     @NotNull
     private String workingTime;
     @NotNull
-    private String marketCnpj;
+    private String cnpj;
 
     public MarketRequestDto convertModelToDto() {
-        return new MarketRequestDto(marketName, marketAddress, marketNumber, workingTime, marketCnpj);
+        return new MarketRequestDto(name, address, number, workingTime, cnpj);
     }
 }

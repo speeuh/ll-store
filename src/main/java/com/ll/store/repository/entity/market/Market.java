@@ -3,6 +3,7 @@ package com.ll.store.repository.entity.market;
 import com.ll.store.service.dto.market.MarketResponseDto;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
@@ -14,27 +15,28 @@ import javax.persistence.*;
 public class Market {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    private String marketName;
-    private String marketAddress;
-    private String marketNumber;
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    private String id;
+    private String name;
+    private String address;
+    private String number;
     private String workingTime;
-    private String marketCnpj;
+    private String cnpj;
 
 
-    public Market(String marketName, String marketAddress, String marketNumber, String workingTime, String marketCnpj) {
-        this.marketName = marketName;
-        this.marketAddress = marketAddress;
-        this.marketNumber = marketNumber;
+    public Market(String name, String address, String number, String workingTime, String cnpj) {
+        this.name = name;
+        this.address = address;
+        this.number = number;
         this.workingTime = workingTime;
-        this.marketCnpj = marketCnpj;
+        this.cnpj = cnpj;
     }
 
     public Market() {
     }
 
     public MarketResponseDto convertEntityToResponse(){
-        return new MarketResponseDto(id, marketName, marketAddress, marketNumber, workingTime, marketCnpj);
+        return new MarketResponseDto(id, name, address, number, workingTime, cnpj);
     }
 }

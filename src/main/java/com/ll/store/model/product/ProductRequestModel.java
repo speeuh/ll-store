@@ -16,20 +16,19 @@ import java.util.Date;
 public class ProductRequestModel {
 
     @NotNull @NotBlank
-    private String productName;
+    private String name;
     @NotNull
     private Brand brand;
     @NotNull
     private Section section;
     @NotNull @NotBlank
     private String description;
+    private Double value;
     @NotNull
-    private Double productValue;
-    @NotNull
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private Date productExpiry;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date expiry;
 
     public ProductRequestDto convertRequestModelToDto(){
-        return new ProductRequestDto(productName, brand, section, description, productValue, productExpiry);
+        return new ProductRequestDto(name, brand, section, description, value, expiry);
     }
 }

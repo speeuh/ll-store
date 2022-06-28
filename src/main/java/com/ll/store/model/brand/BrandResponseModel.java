@@ -7,11 +7,11 @@ import lombok.Setter;
 @Getter
 public class BrandResponseModel {
 
-    private long id;
-    private String brandName;
+    private String id;
+    private String name;
 
-    public BrandResponseModel(long id, String brandName) {
+    public BrandResponseModel(String id, String name) {
         this.id = id;
-        this.brandName = brandName;
+        this.name = name;
     }
 }

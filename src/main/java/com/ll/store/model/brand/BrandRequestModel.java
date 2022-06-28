@@ -8,9 +8,9 @@ import lombok.Setter;
 @Getter
 public class BrandRequestModel {
 
-    private String brandName;
+    private String name;
 
     public BrandRequestDto convertBrandRequestModelToDto(){
-        return new BrandRequestDto(brandName);
+        return new BrandRequestDto(name);
     }
 }

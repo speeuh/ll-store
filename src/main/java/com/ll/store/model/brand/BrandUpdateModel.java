@@ -8,9 +8,9 @@ import lombok.Setter;
 @Getter
 public class BrandUpdateModel {
 
-    private String brandName;
+    private String name;
 
     public BrandUpdateDto convertUpdateModelToDto() {
-        return new BrandUpdateDto(brandName);
+        return new BrandUpdateDto(name);
     }
 }

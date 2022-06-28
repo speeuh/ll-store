@@ -12,8 +12,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class SectionService {
+    
     @Autowired
     private SectionRepository sectionRepository;
 
@@ -29,12 +33,18 @@ public class SectionService {
         return sectionRepository.findAll(pageable).map(Section::convertEntityToResponseDto);
     }
 
-    public SectionResponseDto getSectionById(long id) {
+    public SectionResponseDto getSectionById(String id) {
         Section section = sectionRepository.findById(id).orElseThrow(() -> new SectionNotFoundException("Not found section with id " + id));
         return section.convertEntityToResponseDto();
     }
 
-    public void deleteSectionById(long id) {
+    public List<SectionResponseDto> getAllListedSections() {
+        return sectionRepository.findAll().stream()
+                .map(Section::convertEntityToResponseDto)
+                .collect(Collectors.toList());
+    }
+
+    public void deleteSectionById(String id) {
 
         try{
             sectionRepository.deleteById(id);
@@ -43,11 +53,11 @@ public class SectionService {
         }
     }
 
-    public SectionResponseDto updateSectionById(SectionUpdateDto sectionUpdateDto, long id) {
+    public SectionResponseDto updateSectionById(SectionUpdateDto sectionUpdateDto, String id) {
         Section section = sectionRepository.findById(id).orElseThrow(()-> new SectionNotFoundException("Not found section with id " + id));
 
-        if(sectionUpdateDto.getSection() != null) {
-            section.setSection(sectionUpdateDto.getSection());
+        if(sectionUpdateDto.getName() != null) {
+            section.setName(sectionUpdateDto.getName());
         }
 
         Section sectionResponse = sectionRepository.save(section);

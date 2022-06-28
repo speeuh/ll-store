@@ -16,12 +16,12 @@ public class ProductUpdateModel {
             max = 10,
             message = "Product name accepts at most 10 characters and at least 2 characters"
     )
-    private String productName;
+    private String name;
     @Size( max = 200, message = "Product description accepts at most 200 characters" )
     private String description;
-    private Double productValue;
+    private Double value;
 
     public ProductUpdateDto convertUpdateModelToDto(){
-        return new ProductUpdateDto(productName, description, productValue);
+        return new ProductUpdateDto(name, description, value);
     }
 }

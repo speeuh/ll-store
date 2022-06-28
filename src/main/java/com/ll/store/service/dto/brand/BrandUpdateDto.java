@@ -7,9 +7,9 @@ import lombok.Setter;
 @Getter
 public class BrandUpdateDto {
 
-    private String brandName;
+    private String name;
 
-    public BrandUpdateDto(String brandName) {
-        this.brandName = brandName;
+    public BrandUpdateDto(String name) {
+        this.name = name;
     }
 }

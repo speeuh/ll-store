@@ -8,21 +8,21 @@ import lombok.Setter;
 @Setter
 public class MarketRequestDto {
 
-    private String marketName;
-    private String marketAddress;
-    private String marketNumber;
+    private String name;
+    private String address;
+    private String number;
     private String workingTime;
-    private String marketCnpj;
+    private String cnpj;
 
-    public MarketRequestDto(String marketName, String marketAddress, String marketNumber,  String workingTime, String marketCnpj) {
-        this.marketName = marketName;
-        this.marketAddress = marketAddress;
-        this.marketNumber = marketNumber;
+    public MarketRequestDto(String name, String address, String number, String workingTime, String cnpj) {
+        this.name = name;
+        this.address = address;
+        this.number = number;
         this.workingTime = workingTime;
-        this.marketCnpj = marketCnpj;
+        this.cnpj = cnpj;
     }
 
     public Market convertDtoToEntity(){
-        return new Market(marketName, marketAddress, marketNumber, workingTime, marketCnpj);
+        return new Market(name, address, number, workingTime, cnpj);
     }
 }

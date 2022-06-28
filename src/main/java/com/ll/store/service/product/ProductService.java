@@ -37,15 +37,15 @@ public class ProductService {
     public ProductResponseDto createProduct(ProductRequestDto productRequestDto){
 
         Brand brand = brandRepository.findById(productRequestDto.getBrand().getId()).orElseThrow(() -> new BrandNotFoundException("Not found brand with id: " + productRequestDto.getBrand().getId()));
-        productRequestDto.getBrand().setBrandName(brand.getBrandName());
+        productRequestDto.getBrand().setName(brand.getName());
 
         Section section = sectionRepository.findById(productRequestDto.getSection().getId()).orElseThrow(() -> new SectionNotFoundException("Not found section with id: " + productRequestDto.getSection().getId()));
-        productRequestDto.getSection().setSection(section.getSection());
+        productRequestDto.getSection().setName(section.getName());
 
         Date date = new Date();
 
         Product product = productRequestDto.convertDtoToEntity();
-        product.setProductDate(date);
+        product.setDate(date);
         Product productResponse = productRepository.save(product);
 
         return productResponse.convertEntityToResponse();
@@ -61,13 +61,13 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public ProductResponseDto getById(long id){
+    public ProductResponseDto getById(String id){
 
         Product product = productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException("Not found product with id " + id));
         return product.convertEntityToResponse();
     }
 
-    public void deleteById(long id){
+    public void deleteById(String id){
         try {
             productRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e){
@@ -75,20 +75,20 @@ public class ProductService {
         }
     }
 
-    public ProductResponseDto updateById(ProductUpdateDto productUpdateDto, long id){
+    public ProductResponseDto updateById(ProductUpdateDto productUpdateDto, String id){
 
         Product product = productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException("Not found product with id " + id));
 
-        if(productUpdateDto.getProductName() != null){
-            product.setProductName(productUpdateDto.getProductName());
+        if(productUpdateDto.getName() != null){
+            product.setName(productUpdateDto.getName());
         }
 
         if(productUpdateDto.getDescription() != null){
             product.setDescription(productUpdateDto.getDescription());
         }
 
-        if(productUpdateDto.getProductValue() != null){
-            product.setProductValue(productUpdateDto.getProductValue());
+        if(productUpdateDto.getValue() != null){
+            product.setValue(productUpdateDto.getValue());
         }
 
         Product productResponse = productRepository.save(product);

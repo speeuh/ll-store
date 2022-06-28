@@ -12,24 +12,24 @@ import java.util.Date;
 @Getter
 public class ProductRequestDto {
 
-    private String productName;
+    private String name;
     private Brand brand;
     private Section section;
     private String description;
-    private Double productValue;
-    private Date productExpiry;
+    private Double value;
+    private Date expiry;
 
-    public ProductRequestDto(String productName, Brand brand, Section section, String description, Double productValue, Date productExpiry) {
-        this.productName = productName;
+    public ProductRequestDto(String name, Brand brand, Section section, String description, Double value, Date expiry) {
+        this.name = name;
         this.brand = brand;
         this.section = section;
         this.description = description;
-        this.productValue = productValue;
-        this.productExpiry = productExpiry;
+        this.value = value;
+        this.expiry = expiry;
     }
 
     public Product convertDtoToEntity(){
-        return new Product(productName, brand, section, description, productValue, productExpiry);
+        return new Product(name, brand, section, description, value, expiry);
     }
 
 }

@@ -6,17 +6,18 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MarketUpdateDto {
-    private String marketName;
-    private String marketAddress;
-    private String marketNumber;
-    private String workingTime;
-    private String marketCnpj;
 
-    public MarketUpdateDto(String marketName, String marketAddress, String marketNumber, String workingTime, String marketCnpj) {
-        this.marketName = marketName;
-        this.marketAddress = marketAddress;
-        this.marketNumber = marketNumber;
+    private String name;
+    private String address;
+    private String number;
+    private String workingTime;
+    private String cnpj;
+
+    public MarketUpdateDto(String name, String address, String number, String workingTime, String cnpj) {
+        this.name = name;
+        this.address = address;
+        this.number = number;
         this.workingTime = workingTime;
-        this.marketCnpj = marketCnpj;
+        this.cnpj = cnpj;
     }
 }

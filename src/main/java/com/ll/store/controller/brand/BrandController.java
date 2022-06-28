@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -31,7 +33,6 @@ public class BrandController {
 
     @PostMapping
     public ResponseEntity<BrandResponseModel> createBrand(@RequestBody @Valid BrandRequestModel brandRequestModel){
-
         BrandRequestDto brandRequestDto = brandRequestModel.convertBrandRequestModelToDto();
         BrandResponseDto brandResponseDto = brandService.createBrand(brandRequestDto);
         BrandResponseModel brandResponseModel = brandResponseDto.convertBrandResponseDtoToModel();
@@ -41,28 +42,32 @@ public class BrandController {
 
     @GetMapping
     public ResponseEntity<Page<BrandResponseModel>> getAllBrands(@PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
-
         Page<BrandResponseDto> brandResponseDto = brandService.getAllBrands(pageable);
         return ResponseEntity.ok(brandResponseDto.map(BrandResponseDto::convertBrandResponseDtoToModel));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BrandResponseModel> getBrandById(@PathVariable long id){
-
+    public ResponseEntity<BrandResponseModel> getBrandById(@PathVariable String id){
         BrandResponseDto brandResponseDto = brandService.getBrandById(id);
         return ResponseEntity.ok(brandResponseDto.convertBrandResponseDtoToModel());
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteBrandById(@PathVariable long id){
+    @GetMapping("/list")
+    public ResponseEntity<List<BrandResponseModel>> getAllListedBrands() {
+        List<BrandResponseDto> brandResponseDto = brandService.getAllListedBrands();
+        return ResponseEntity.ok(brandResponseDto.stream()
+                .map(BrandResponseDto::convertBrandResponseDtoToModel)
+                .collect(Collectors.toList()));
+    }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteBrandById(@PathVariable String id){
         brandService.deleteBrandById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<BrandResponseModel> updateBrandById(@RequestBody BrandUpdateModel brandUpdateModel, @PathVariable long id, BindingResult result) throws Exception{
-
+    public ResponseEntity<BrandResponseModel> updateBrandById(@RequestBody BrandUpdateModel brandUpdateModel, @PathVariable String id, BindingResult result) throws Exception {
         try {
             if(result.hasErrors()){
                 throw new IllegalArgumentException(Objects.requireNonNull(result.getFieldError()).getDefaultMessage());

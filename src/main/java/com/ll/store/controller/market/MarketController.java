@@ -47,21 +47,21 @@ public class MarketController {
     }
 
     @GetMapping("/{id}")
-    public  ResponseEntity<MarketResponseModel> getMarketById(@PathVariable long id) {
+    public  ResponseEntity<MarketResponseModel> getMarketById(@PathVariable String id) {
         MarketResponseDto marketResponseDto = marketService.getMarketById(id);
 
         return ResponseEntity.ok(marketResponseDto.convertResponseDtoTtoResponseModel());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteMarketById(@PathVariable long id) {
+    public ResponseEntity<String> deleteMarketById(@PathVariable String id) {
         marketService.deleteMarket(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PatchMapping("/{id}")
-    public  ResponseEntity<MarketResponseModel> updateMarketById(@PathVariable long id, @RequestBody MarketUpdateModel marketUpdateModel, BindingResult result) throws Exception {
+    public  ResponseEntity<MarketResponseModel> updateMarketById(@PathVariable String id, @RequestBody MarketUpdateModel marketUpdateModel, BindingResult result) throws Exception {
         try {
             if (result.hasErrors()) {
                 throw new IllegalArgumentException(Objects.requireNonNull(result.getFieldError()).getDefaultMessage());

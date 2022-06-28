@@ -1,6 +1,7 @@
 package com.ll.store.model.product;
 
 import com.ll.store.repository.entity.brand.Brand;
+import com.ll.store.repository.entity.file.File;
 import com.ll.store.repository.entity.section.Section;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,24 +12,25 @@ import java.util.Date;
 @Getter
 public class ProductResponseModel {
 
-    private long id;
-    private String productName;
+    private String id;
+    private String name;
     private Brand brand;
     private Section section;
     private String description;
-    private Double productValue;
-    private Date productDate;
-    private Date productExpiry;
+    private Double value;
+    private Date date;
+    private Date expiry;
+    private File file;
 
-    public ProductResponseModel(long id, String productName, Brand brand, Section section, String description, Double productValue, Date productDate, Date productExpiry) {
+    public ProductResponseModel(String id, String name, Brand brand, Section section, String description, Double value, Date date, Date expiry, File file) {
         this.id = id;
-        this.productName = productName;
+        this.name = name;
         this.brand = brand;
         this.section = section;
         this.description = description;
-        this.productValue = productValue;
-        this.productDate = productDate;
-        this.productExpiry = productExpiry;
+        this.value = value;
+        this.date = date;
+        this.expiry = expiry;
+        this.file = file;
     }
-
 }

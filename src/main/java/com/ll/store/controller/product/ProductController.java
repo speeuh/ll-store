@@ -49,7 +49,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductResponseModel> getById(@PathVariable long id){
+    public ResponseEntity<ProductResponseModel> getById(@PathVariable String id){
 
         ProductResponseDto productResponseDto = productService.getById(id);
         return ResponseEntity.ok(productResponseDto.convertResponseDtoToResponseModel());
@@ -64,13 +64,13 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteProductById(@PathVariable long id){
+    public ResponseEntity<String> deleteProductById(@PathVariable String id){
         productService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ProductResponseModel> updateProductById(@RequestBody @Valid ProductUpdateModel productUpdateModel, @PathVariable long id, BindingResult result) throws Exception{
+    public ResponseEntity<ProductResponseModel> updateProductById(@RequestBody @Valid ProductUpdateModel productUpdateModel, @PathVariable String id, BindingResult result) throws Exception{
 
         try {
             if(result.hasErrors()){

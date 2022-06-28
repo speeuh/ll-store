@@ -8,13 +8,13 @@ import lombok.Setter;
 @Getter
 public class BrandRequestDto {
 
-    private String brandName;
+    private String name;
 
-    public BrandRequestDto(String brandName) {
-        this.brandName = brandName;
+    public BrandRequestDto(String name) {
+        this.name = name;
     }
 
     public Brand convertBrandDtoToEntity(){
-        return new Brand(brandName);
+        return new Brand(name);
     }
 }

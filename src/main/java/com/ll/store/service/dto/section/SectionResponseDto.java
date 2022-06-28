@@ -7,16 +7,15 @@ import lombok.Setter;
 @Setter
 @Getter
 public class SectionResponseDto {
+    private String id;
+    private String name;
 
-    private long id;
-    private String section;
-
-    public SectionResponseDto(long id, String section) {
+    public SectionResponseDto(String id, String name) {
         this.id = id;
-        this.section = section;
+        this.name = name;
     }
 
     public SectionResponseModel convertResponseDtoToModel() {
-        return new SectionResponseModel(id, section);
+        return new SectionResponseModel(id, name);
     }
 }

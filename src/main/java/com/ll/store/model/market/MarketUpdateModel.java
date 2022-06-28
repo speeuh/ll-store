@@ -8,13 +8,13 @@ import lombok.Setter;
 @Setter
 public class MarketUpdateModel {
 
-    private String marketName;
-    private String marketAddress;
-    private String marketNumber;
+    private String name;
+    private String address;
+    private String number;
     private String workingTime;
-    private String marketCnpj;
+    private String cnpj;
 
     public MarketUpdateDto convertUpdateModelToDto() {
-        return new MarketUpdateDto(marketName, marketAddress, marketNumber, workingTime, marketCnpj);
+        return new MarketUpdateDto(name, address, number, workingTime, cnpj);
     }
 }

@@ -6,10 +6,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SectionUpdateDto {
-    private String section;
+    private String name;
 
-
-    public SectionUpdateDto(String section) {
-        this.section = section;
+    public SectionUpdateDto(String name) {
+        this.name = name;
     }
 }

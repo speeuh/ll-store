@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -48,22 +50,30 @@ public class SectionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SectionResponseModel> getSectionById(@PathVariable long id) {
+    public ResponseEntity<SectionResponseModel> getSectionById(@PathVariable String id) {
        SectionResponseDto sectionResponseDto = sectionService.getSectionById(id);
 
         return ResponseEntity.ok(sectionResponseDto.convertResponseDtoToModel());
 
     }
 
+    @GetMapping("/list")
+    public ResponseEntity<List<SectionResponseModel>> getAllListedSections() {
+        List<SectionResponseDto> sectionResponseDto = sectionService.getAllListedSections();
+        return ResponseEntity.ok(sectionResponseDto.stream()
+                .map(SectionResponseDto::convertResponseDtoToModel)
+                .collect(Collectors.toList()));
+    }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteSectionById(@PathVariable long id) {
+    public ResponseEntity<String> deleteSectionById(@PathVariable String id) {
          sectionService.deleteSectionById(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<SectionResponseModel> updateSectionById(@PathVariable long id, @RequestBody SectionUpdateModel sectionUpdateModel, BindingResult result) throws Exception {
+    public ResponseEntity<SectionResponseModel> updateSectionById(@PathVariable String id, @RequestBody SectionUpdateModel sectionUpdateModel, BindingResult result) throws Exception {
        try {
            if (result.hasErrors()) {
                throw new IllegalArgumentException(Objects.requireNonNull(result.getFieldError()).getDefaultMessage());

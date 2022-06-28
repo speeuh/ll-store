@@ -7,19 +7,19 @@ import lombok.Setter;
 @Setter
 public class MarketResponseModel {
 
-    private long id;
-    private String marketName;
-    private String marketAddress;
-    private String marketNumber;
+    private String id;
+    private String name;
+    private String address;
+    private String number;
     private String workingTime;
-    private String marketCnpj;
+    private String cnpj;
 
-    public MarketResponseModel(long id, String marketName, String marketAddress, String marketNumber, String workingTime, String marketCnpj) {
+    public MarketResponseModel(String id, String name, String address, String number, String workingTime, String cnpj) {
         this.id = id;
-        this.marketName = marketName;
-        this.marketAddress = marketAddress;
-        this.marketNumber = marketNumber;
+        this.name = name;
+        this.address = address;
+        this.number = number;
         this.workingTime = workingTime;
-        this.marketCnpj = marketCnpj;
+        this.cnpj = cnpj;
     }
 }

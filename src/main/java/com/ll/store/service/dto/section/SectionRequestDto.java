@@ -9,13 +9,13 @@ import lombok.Setter;
 @Getter
 public class SectionRequestDto {
 
-    private String section;
+    private String name;
 
-    public SectionRequestDto(String section) {
-        this.section = section;
+    public SectionRequestDto(String name) {
+        this.name = name;
     }
 
     public Section convertRequestDtoToEntity(){
-        return new Section(section);
+        return new Section(name);
     }
 };

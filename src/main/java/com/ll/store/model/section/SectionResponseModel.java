@@ -6,11 +6,11 @@ import lombok.Setter;
 @Setter
 @Getter
 public class SectionResponseModel {
-    private long id;
-    private String section;
+    private String id;
+    private String name;
 
-    public SectionResponseModel(long id, String section) {
+    public SectionResponseModel(String id, String name) {
         this.id = id;
-        this.section = section;
+        this.name = name;
     }
 }

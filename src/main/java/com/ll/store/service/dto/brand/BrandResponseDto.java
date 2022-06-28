@@ -8,15 +8,15 @@ import lombok.Setter;
 @Getter
 public class BrandResponseDto {
 
-    private long id;
-    private String brandName;
+    private String id;
+    private String name;
 
-    public BrandResponseDto(long id, String brandName) {
+    public BrandResponseDto(String id, String name) {
         this.id = id;
-        this.brandName = brandName;
+        this.name = name;
     }
 
     public BrandResponseModel convertBrandResponseDtoToModel(){
-        return new BrandResponseModel(id, brandName);
+        return new BrandResponseModel(id, name);
     }
 }

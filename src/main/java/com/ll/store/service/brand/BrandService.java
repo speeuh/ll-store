@@ -12,6 +12,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class BrandService {
 
@@ -19,7 +22,6 @@ public class BrandService {
     private BrandRepository brandRepository;
 
     public BrandResponseDto createBrand(BrandRequestDto brandRequestDto){
-
         Brand brand = brandRequestDto.convertBrandDtoToEntity();
         Brand brandResponse = brandRepository.save(brand);
 
@@ -30,14 +32,18 @@ public class BrandService {
         return brandRepository.findAll(pageable).map(Brand::convertBrandEntityToResponseDto);
     }
 
-    public BrandResponseDto getBrandById(long id){
+    public List<BrandResponseDto> getAllListedBrands() {
+        return brandRepository.findAll().stream()
+                .map(Brand::convertBrandEntityToResponseDto)
+                .collect(Collectors.toList());
+    }
 
+    public BrandResponseDto getBrandById(String id){
         Brand brand = brandRepository.findById(id).orElseThrow(() -> new BrandNotFoundException("Not found brand with id: " + id));
         return brand.convertBrandEntityToResponseDto();
     }
 
-    public void deleteBrandById(long id){
-
+    public void deleteBrandById(String id){
         try {
             brandRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e){
@@ -46,12 +52,11 @@ public class BrandService {
 
     }
 
-    public BrandResponseDto updateBrandById(BrandUpdateDto brandUpdateDto, long id){
-
+    public BrandResponseDto updateBrandById(BrandUpdateDto brandUpdateDto, String id){
         Brand brand = brandRepository.findById(id).orElseThrow(() -> new BrandNotFoundException("Not found brand with id: " + id));
 
-        if(brandUpdateDto.getBrandName() != null){
-            brand.setBrandName(brandUpdateDto.getBrandName());
+        if(brandUpdateDto.getName() != null){
+            brand.setName(brandUpdateDto.getName());
         }
 
         Brand brandResponse = brandRepository.save(brand);

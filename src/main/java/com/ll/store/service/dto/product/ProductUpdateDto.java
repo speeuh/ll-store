@@ -8,13 +8,14 @@ import lombok.Setter;
 @Getter
 public class ProductUpdateDto {
 
-    private String productName;
+    private String name;
     private String description;
-    private Double productValue;
+    private Double value;
 
-    public ProductUpdateDto(String productName, String description, Double productValue) {
-        this.productName = productName;
-        this.productValue = productValue;
+    public ProductUpdateDto(String name, String description, Double value) {
+        this.name = name;
+        this.description = description;
+        this.value = value;
     }
 
 }

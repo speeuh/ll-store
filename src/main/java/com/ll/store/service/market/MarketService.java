@@ -31,12 +31,12 @@ public class MarketService {
         return marketRepository.findAll(pageable).map(Market::convertEntityToResponse);
     }
 
-    public MarketResponseDto getMarketById(long id) {
+    public MarketResponseDto getMarketById(String id) {
         Market market = marketRepository.findById(id).orElseThrow(()-> new MarketNotFoundException("Not found market with id " + id));
         return market.convertEntityToResponse();
     }
 
-    public void deleteMarket(long id) {
+    public void deleteMarket(String id) {
 
         try{
             marketRepository.deleteById(id);
@@ -45,27 +45,27 @@ public class MarketService {
         }
     }
 
-    public MarketResponseDto updateMarketById(MarketUpdateDto marketUpdateDto, long id) {
+    public MarketResponseDto updateMarketById(MarketUpdateDto marketUpdateDto, String id) {
         Market market = marketRepository.findById(id).orElseThrow(()-> new MarketNotFoundException("Not found Market with id " + id));
 
-        if(marketUpdateDto.getMarketName() != null) {
-            market.setMarketName(marketUpdateDto.getMarketName());
+        if(marketUpdateDto.getName() != null) {
+            market.setName(marketUpdateDto.getName());
         }
 
-        if(marketUpdateDto.getMarketAddress() != null) {
-            market.setMarketAddress(marketUpdateDto.getMarketAddress());
+        if(marketUpdateDto.getAddress() != null) {
+            market.setAddress(marketUpdateDto.getAddress());
         }
 
-        if(marketUpdateDto.getMarketNumber() != null) {
-            market.setMarketNumber(marketUpdateDto.getMarketNumber());
+        if(marketUpdateDto.getNumber() != null) {
+            market.setNumber(marketUpdateDto.getNumber());
         }
 
         if(marketUpdateDto.getWorkingTime() != null) {
             market.setWorkingTime(marketUpdateDto.getWorkingTime());
         }
 
-        if(marketUpdateDto.getMarketCnpj() != null) {
-            market.setMarketCnpj(marketUpdateDto.getMarketCnpj());
+        if(marketUpdateDto.getCnpj() != null) {
+            market.setCnpj(marketUpdateDto.getCnpj());
         }
 
         Market marketResponse = marketRepository.save(market);

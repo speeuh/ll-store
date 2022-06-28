@@ -3,6 +3,7 @@ package com.ll.store.repository.entity.brand;
 import com.ll.store.service.dto.brand.BrandResponseDto;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
@@ -13,20 +14,21 @@ import javax.persistence.*;
 public class Brand {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    private String id;
 
-    @Column(name = "brand_name", unique = true)
-    private String brandName;
+    @Column(name = "name", unique = true)
+    private String name;
 
-    public Brand(String brandName) {
-        this.brandName = brandName;
+    public Brand(String name) {
+        this.name = name;
     }
 
     public Brand() {
     }
 
     public BrandResponseDto convertBrandEntityToResponseDto(){
-        return new BrandResponseDto(id, brandName);
+        return new BrandResponseDto(id, name);
     }
 }

@@ -12,9 +12,9 @@ import javax.validation.constraints.NotNull;
 public class SectionRequestModel {
 
     @NotNull @NotBlank
-    private String section;
+    private String name;
 
     public SectionRequestDto convertRequestModelToDto(){
-        return new SectionRequestDto(section);
+        return new SectionRequestDto(name);
     }
 }
