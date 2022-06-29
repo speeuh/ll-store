@@ -23,6 +23,7 @@ public class ProductRequestModel {
     private Section section;
     @NotNull @NotBlank
     private String description;
+    @NotNull
     private Double value;
     @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd")
