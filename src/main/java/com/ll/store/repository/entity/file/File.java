@@ -2,8 +2,6 @@ package com.ll.store.repository.entity.file;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ll.store.repository.entity.product.Product;
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -30,18 +28,13 @@ public class File {
 
     private String type;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "product_id", referencedColumnName="id")
-    private Product product;
-
     public File() {
     }
 
-    public File(String fileName, byte[] data, String type, Product product) {
+    public File(String fileName, byte[] data, String type) {
         this.fileName = fileName;
         this.data = data;
         this.type = type;
-        this.product = product;
     }
 
     public static class FileBuilder{
@@ -69,13 +62,8 @@ public class File {
             return this;
         }
 
-        public FileBuilder withProduct(Product product) {
-            this.product = product;
-            return this;
-        }
-
         public File build() {
-            return new File(fileName, data, type, product);
+            return new File(fileName, data, type);
         }
     }
 
@@ -127,13 +115,5 @@ public class File {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
     }
 }

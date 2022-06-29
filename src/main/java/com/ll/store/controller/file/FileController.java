@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/file")
@@ -22,5 +24,11 @@ public class FileController {
 
         File files = fileService.save(file, productId);
        return ResponseEntity.status(HttpStatus.CREATED).body(files);
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<List<File>> getAllListedFiles() {
+        List<File> files = fileService.getAllListedFiles();
+        return ResponseEntity.ok(files);
     }
 }

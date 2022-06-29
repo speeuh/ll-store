@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public class FileService implements FileServiceInterface {
@@ -44,7 +45,6 @@ public class FileService implements FileServiceInterface {
         File files = fileRepository.saveAndFlush(File.FileBuilder.newBuilder(data).
                 withFileName(fileName).
                 withType(type).
-                withProduct(product).
                 build());
 
         product.setFile(files);
@@ -52,6 +52,10 @@ public class FileService implements FileServiceInterface {
         productRepository.saveAndFlush(product);
 
         return files;
+    }
+
+    public List<File> getAllListedFiles() {
+        return fileRepository.findAll();
     }
 
 }
