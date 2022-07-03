@@ -8,6 +8,9 @@ import com.ll.store.service.dto.section.SectionResponseDto;
 import com.ll.store.service.dto.section.SectionUpdateDto;
 import com.ll.store.service.section.SectionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -32,6 +35,10 @@ public class SectionController {
     public  SectionService sectionService;
 
     @PostMapping
+    @Caching(evict = {
+            @CacheEvict(value = "pageSections", allEntries = true),
+            @CacheEvict(value = "listSections", allEntries = true)
+    })
     public ResponseEntity<SectionResponseModel> createSection(@RequestBody @Valid SectionRequestModel sectionRequestModel) {
 
         SectionRequestDto sectionRequestDto = sectionRequestModel.convertRequestModelToDto();
@@ -42,6 +49,7 @@ public class SectionController {
     }
 
     @GetMapping
+    @Cacheable(value = "pageSections")
     public ResponseEntity<Page<SectionResponseModel>> getAllSections(@PageableDefault(sort = "id", direction = Sort.Direction.ASC)Pageable pageable) {
 
         Page<SectionResponseDto> sectionResponseDto = sectionService.getAllSections(pageable);
@@ -58,6 +66,7 @@ public class SectionController {
     }
 
     @GetMapping("/list")
+    @Cacheable(value = "listSections")
     public ResponseEntity<List<SectionResponseModel>> getAllListedSections() {
         List<SectionResponseDto> sectionResponseDto = sectionService.getAllListedSections();
         return ResponseEntity.ok(sectionResponseDto.stream()
@@ -66,6 +75,10 @@ public class SectionController {
     }
 
     @DeleteMapping("/{id}")
+    @Caching(evict = {
+            @CacheEvict(value = "pageSections", allEntries = true),
+            @CacheEvict(value = "listSections", allEntries = true)
+    })
     public ResponseEntity<String> deleteSectionById(@PathVariable String id) {
          sectionService.deleteSectionById(id);
 
@@ -73,6 +86,10 @@ public class SectionController {
     }
 
     @PatchMapping("/{id}")
+    @Caching(evict = {
+            @CacheEvict(value = "pageSections", allEntries = true),
+            @CacheEvict(value = "listSections", allEntries = true)
+    })
     public ResponseEntity<SectionResponseModel> updateSectionById(@PathVariable String id, @RequestBody SectionUpdateModel sectionUpdateModel, BindingResult result) throws Exception {
        try {
            if (result.hasErrors()) {

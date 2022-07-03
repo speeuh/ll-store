@@ -8,6 +8,9 @@ import com.ll.store.service.dto.brand.BrandRequestDto;
 import com.ll.store.service.dto.brand.BrandResponseDto;
 import com.ll.store.service.dto.brand.BrandUpdateDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -32,6 +35,10 @@ public class BrandController {
     private BrandService brandService;
 
     @PostMapping
+    @Caching(evict = {
+            @CacheEvict(value = "pageBrands", allEntries = true),
+            @CacheEvict(value = "listBrands", allEntries = true)
+    })
     public ResponseEntity<BrandResponseModel> createBrand(@RequestBody @Valid BrandRequestModel brandRequestModel){
         BrandRequestDto brandRequestDto = brandRequestModel.convertBrandRequestModelToDto();
         BrandResponseDto brandResponseDto = brandService.createBrand(brandRequestDto);
@@ -41,6 +48,7 @@ public class BrandController {
     }
 
     @GetMapping
+    @Cacheable(value = "pageBrands")
     public ResponseEntity<Page<BrandResponseModel>> getAllBrands(@PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
         Page<BrandResponseDto> brandResponseDto = brandService.getAllBrands(pageable);
         return ResponseEntity.ok(brandResponseDto.map(BrandResponseDto::convertBrandResponseDtoToModel));
@@ -53,6 +61,7 @@ public class BrandController {
     }
 
     @GetMapping("/list")
+    @Cacheable(value = "listBrands")
     public ResponseEntity<List<BrandResponseModel>> getAllListedBrands() {
         List<BrandResponseDto> brandResponseDto = brandService.getAllListedBrands();
         return ResponseEntity.ok(brandResponseDto.stream()
@@ -61,12 +70,20 @@ public class BrandController {
     }
 
     @DeleteMapping("/{id}")
+    @Caching(evict = {
+            @CacheEvict(value = "pageBrands", allEntries = true),
+            @CacheEvict(value = "listBrands", allEntries = true)
+    })
     public ResponseEntity<String> deleteBrandById(@PathVariable String id){
         brandService.deleteBrandById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PatchMapping("/{id}")
+    @Caching(evict = {
+            @CacheEvict(value = "pageBrands", allEntries = true),
+            @CacheEvict(value = "listBrands", allEntries = true)
+    })
     public ResponseEntity<BrandResponseModel> updateBrandById(@RequestBody BrandUpdateModel brandUpdateModel, @PathVariable String id, BindingResult result) throws Exception {
         try {
             if(result.hasErrors()){

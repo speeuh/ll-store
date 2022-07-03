@@ -8,6 +8,9 @@ import com.ll.store.service.dto.product.ProductResponseDto;
 import com.ll.store.service.dto.product.ProductUpdateDto;
 import com.ll.store.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -32,6 +35,10 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping
+    @Caching(evict = {
+            @CacheEvict(value = "pageProducts", allEntries = true),
+            @CacheEvict(value = "listProducts", allEntries = true)
+    })
     public ResponseEntity<ProductResponseModel> createProduct(@RequestBody @Valid ProductRequestModel productRequestModel){
 
         ProductRequestDto productRequestDto = productRequestModel.convertRequestModelToDto();
@@ -42,6 +49,7 @@ public class ProductController {
     }
 
     @GetMapping
+    @Cacheable(value = "pageProducts")
     public ResponseEntity<Page<ProductResponseModel>> getAllProducts(@PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
 
         Page<ProductResponseDto> productResponseDto = productService.getAllProducts(pageable);
@@ -56,6 +64,7 @@ public class ProductController {
     }
 
     @GetMapping("/list")
+    @Cacheable(value = "listProducts")
     public ResponseEntity<List<ProductResponseModel>> getAllListedProducts() {
         List<ProductResponseDto> productResponseDto = productService.getAllListedProducts();
         return ResponseEntity.ok(productResponseDto.stream()
@@ -64,12 +73,20 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
+    @Caching(evict = {
+            @CacheEvict(value = "pageProducts", allEntries = true),
+            @CacheEvict(value = "listProducts", allEntries = true)
+    })
     public ResponseEntity<String> deleteProductById(@PathVariable String id){
         productService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PatchMapping("/{id}")
+    @Caching(evict = {
+            @CacheEvict(value = "pageProducts", allEntries = true),
+            @CacheEvict(value = "listProducts", allEntries = true)
+    })
     public ResponseEntity<ProductResponseModel> updateProductById(@RequestBody @Valid ProductUpdateModel productUpdateModel, @PathVariable String id, BindingResult result) throws Exception{
 
         try {
